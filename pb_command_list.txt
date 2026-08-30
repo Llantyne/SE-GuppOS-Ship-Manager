@@ -1,0 +1,25 @@
+Commands are case sensitive.
+Replace "____" with value in applicable commands.
+------------------------------------------------------
+Basic PB commands:
+    StopRunning
+        ~Stops main loop of script
+    StartRunning
+        ~Restarts main loop of script
+------------------------------------------------------
+Function manager commands:
+    PowerManagerEnabled = _True/False_
+        ~Enables or disables the power manager function.
+    DoorManagerEnabled = _True/False_
+        ~Enables or disables the door manager function.
+    SetDoorLock = _Tag_ : _Locked/Unlocked_
+        ~Sets doors with supplied tag lock status.
+    SetLightTag = _Tag_ : _True/False_ : _redvalue_,_greenvalue_,_bluevalue_
+        ~Sets lights with supplied tag
+    SetConnectorTag = _Tag_ : _True/False_
+        ~Sets connectors with supplied tag
+
+------------------------------------------------------
+Posture commands:
+    SetPosture = _PostureName_
+        ~Sets current ship posture

@@ -1,0 +1,11 @@
+# SE-GuppOS-Ship-Manager
+Ship management script for Space Engineers
+- Ship management script with fully configurable "Postures" to set ship functionality
+- Adjustable LCD displays to work on any screen
+- Automatic battery mode and reactor management
+- Auto door closing and ship-wide door lock control
+- Customizable lighting control
+- More features in the works
+
+All configuration is done in the custom data of the programmable block, or in the blocks of LCD screens.
+Designed for the Sigma Draconis Expanse 2 server

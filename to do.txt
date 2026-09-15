@@ -1,0 +1,20 @@
+Features:
+- LCDs
+    - Light status LCD
+    - connector status LCD
+    - Inventory LCD
+- runtime profiler? (low priority)
+- inventory management
+    - Auto weapon and reactor loading
+    - inventory counts
+- weapon control
+    - figure out weaponcore api
+- Permanent log
+- Auto-fill custom data with defaults
+- rewrite LCD code to be actually readable (eventually)
+    - transition lcds to ThingGroup format (eventually)
+- Multiple PB block redundancy
+
+Bug Fixes:
+- upload docked lcd fix
+- cross-instance stance persistence (custom data stance saving?)

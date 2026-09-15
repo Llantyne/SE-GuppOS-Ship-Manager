@@ -91,7 +91,7 @@ namespace IngameScript
                             else if (light.CustomName.ToLower().Contains("starboard"))
                             {
                                 //Sets starboard nav lights
-                                light.SetValue("Color", Color.Green);
+                                light.SetValue("Color", Color.Lime);
                                 light.Enabled = on; 
                             }
                         }

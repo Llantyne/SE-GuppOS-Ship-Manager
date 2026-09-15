@@ -96,7 +96,7 @@ namespace IngameScript
             
             //Gets all LCDs with tag and not ignore
             List<IMyTerminalBlock> lcdBlocks = new List<IMyTerminalBlock>();
-            GridTerminalSystem.GetBlocksOfType(lcdBlocks, block => block.CustomName.Contains(gOSLCDTag) && !block.CustomName.Contains(ignoreTag));
+            GridTerminalSystem.GetBlocksOfType(lcdBlocks, block => block.CustomName.Contains(gOSLCDTag) && !block.CustomName.Contains(ignoreTag) && block.IsSameConstructAs(Me));
 
             foreach (IMyTerminalBlock block in lcdBlocks)
             {

@@ -29,7 +29,7 @@ namespace IngameScript
     public partial class Program : MyGridProgram
     {
         //Version
-        static readonly string _Version = "0.2.21";
+        static readonly string _Version = "0.2.22";
 
         //General variables
         static bool logAll;
@@ -250,6 +250,7 @@ namespace IngameScript
         //Creates console log output
         void EchoLog()
         {
+            List<string> toRemove = new List<string>();
             //Cycles through priority levels up to and including 5, priority > 5 or < 0 will not be displayed
             for (int i = 0; i <= 5; i++)
             {
@@ -265,10 +266,16 @@ namespace IngameScript
                         item.Value.life ++;
                         if (item.Value.life == item.Value.maxLife)
                         {
-                            //Deletes log item if lifetime runs out
-                            logItems.Remove(item.Key);
+                            //Adds to delete list if lifetime runs out
+                            toRemove.Add(item.Key);
                         }
                     }
+                }
+                //Remove old items
+                foreach (string thing in toRemove)
+                {
+                    logItems.Remove(thing);
+
                 }   
             }
         }

@@ -3,6 +3,7 @@ Features:
     - Light status LCD
     - connector status LCD
     - Inventory LCD
+    - Info LCD configuration 
 - runtime profiler? (low priority)
 - inventory management
     - Auto weapon and reactor loading

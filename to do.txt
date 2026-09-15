@@ -15,7 +15,3 @@ Features:
 - rewrite LCD code to be actually readable (eventually)
     - transition lcds to ThingGroup format (eventually)
 - Multiple PB block redundancy
-
-Bug Fixes:
-- upload docked lcd fix
-- cross-instance stance persistence (custom data stance saving?)

@@ -129,38 +129,72 @@ namespace IngameScript
                 //Sets main battery mode to auto if not overridden by current posture
                 mainBatteries.SetBatMode(ChargeMode.Auto);
             }
-            //Check levels for reactor status
-            if (mainBatteries.groupPowerLevel < lowPowerPercent)
+
+            //check levels for reactor and backup status
+            if (mainBatteries.groupPowerLevel >= highPowerPercent)
             {
+                //Above high power threshold
                 if (!currentPosture.overrideReactors)
                 {
-                    //Enable main reactors if low power and reactors not overridden by current posture
-                    mainReactors.SetGroupEnabled(true);
-                }
-            }
-            else if (mainBatteries.groupPowerLevel > highPowerPercent)
-            {
-                if (!currentPosture.overrideReactors)
-                {
-                    //Disable main reactors if high power and reactors not overridden by current posture
+                    //Disable main reactors if not overridden by current posture
                     mainReactors.SetGroupEnabled(false);
                 }
-            }
-            //Check levels for backup status
-            if (mainBatteries.groupPowerLevel < 1 || mainBatteries.groupFuncBats < 1)
-            {
                 if (!currentPosture.overrideBatteries)
                 {
-                    //Enables backups if power critical or no functional main batteries and batteries not overridden by current posture
+                    //Set backups to recharge if not overridden by current posture
+                    backupBatteries.SetBatMode(ChargeMode.Recharge);
+                }
+            }
+            else if (mainBatteries.groupPowerLevel < highPowerPercent && mainBatteries.groupPowerLevel >= lowPowerPercent)
+            {
+                //in between high power and low power threshold
+                if (!currentPosture.overrideReactors)
+                {
+                    //Keep main reactors at current status if not overridden by current posture
+                    mainReactors.SetGroupEnabled(mainReactors.groupEnabled ?? false);
+                }
+                if (!currentPosture.overrideBatteries)
+                {
+                    //Set backups to recharge if not overridden by current posture
+                    backupBatteries.SetBatMode(ChargeMode.Recharge);
+                }
+            }
+            else if (mainBatteries.groupPowerLevel < lowPowerPercent && mainBatteries.groupPowerLevel >= 2)
+            {
+                //below low power threshold, above critical power threshold
+                if (!currentPosture.overrideReactors)
+                {
+                    //Enable main reactors if not overridden by current posture
+                    mainReactors.SetGroupEnabled(true);
+                }
+                if (!currentPosture.overrideBatteries)
+                {
+                    //keep backups at current status if not overridden
+                    backupBatteries.SetBatMode(backupBatteries.batteryGroupMode ?? ChargeMode.Recharge);
+                }
+            }
+            else if (mainBatteries.groupPowerLevel < 2)
+            {
+                //Crit power threshold
+                if (!currentPosture.overrideReactors)
+                {
+                    //Enable main reactors if not overridden by current posture
+                    mainReactors.SetGroupEnabled(true);
+                }
+                if (!currentPosture.overrideBatteries)
+                {
+                    //Enables backups if  not overridden by current posture
                     backupBatteries.SetBatMode(ChargeMode.Auto);
                 }
             }
-            else if (mainBatteries.groupPowerLevel >= lowPowerPercent)
+
+            //check main battery func count
+            if (mainBatteries.groupFuncBats < 1)
             {
                 if (!currentPosture.overrideBatteries)
                 {
-                    //Disables backups once power passes low threshold and batteries not overridden by current posture
-                    backupBatteries.SetBatMode(ChargeMode.Recharge);
+                    //Enables backups if no functional main batteries and batteries not overridden by current posture
+                    backupBatteries.SetBatMode(ChargeMode.Auto);
                 }
             }
         }

@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -29,12 +30,16 @@ namespace IngameScript
     public partial class Program : MyGridProgram
     {
         //Version
-        static readonly string _Version = "0.2.22";
+        static readonly string _Version = "0.2.23";
 
         //General variables
         static bool logAll;
         TimeSpan timeSinceLooped;
         static string ignoreTag;
+        
+        //storage variables
+        MyIni _store = new MyIni();
+        string storedPosture = "";
 
         //Boot variables        
         static bool isBooting;
@@ -64,8 +69,12 @@ namespace IngameScript
             LoadBlocks(3);
             Echo("Block lists initialized.");
 
-            //Set starting posture (REQUIRED)
-            FixPosture("Standby");
+            //Load storage
+            _store.TryParse(Storage);
+            storedPosture = _store.Get("Status", "CurrentPosture").ToString("Standby");
+
+            //Set starting posture
+            FixPosture(storedPosture);
 
             //Enable slow loop
             loopVer = 1;
@@ -78,7 +87,6 @@ namespace IngameScript
 
         public void Save()
         {
-            
         }
 
         //Main method, runs every time PB block updates.
@@ -216,6 +224,13 @@ namespace IngameScript
 
             //Refresh LCDs
             RefreshLCDs();
+
+            //Save current posture to storage ini
+            _store.Set("Status", "CurrentPosture", currentPostureName);
+
+
+            //Save storage ini to storage
+            Storage = _store.ToString();
 
 
             //Iterate loop version counter
